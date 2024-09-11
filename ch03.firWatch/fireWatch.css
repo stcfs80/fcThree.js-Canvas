@@ -86,6 +86,10 @@ header{
     background-color: #127374;
 }
 
+.button-in-header .long-text{
+    display:none;
+}
+
 #riguth-buttons{
     display:flex;
 }
@@ -111,18 +115,20 @@ header{
     font-size: 18px;
     font-weight: 700;
     gap: 50px;
+    flex-direction: column;
 }
 
 .mountain-content-wrapper{
     display:flex;
     flex-direction: column;
     gap: 40px;
+ 
 }
 
 .mountain-content-list{
     background-color: #b8e1ee;
-    color:#04210c;
     width: 325px;
+    color:#04210c;
     height: 32px;
     display:flex;
     justify-content: center;
@@ -135,3 +141,22 @@ header{
     flex-direction: column;
     align-items: center;
 }
+
+@media (min-width:880px){
+    .button-in-header .long-text{
+        display:inline;
+    }
+    .buttoin-in-header .short-text{
+        display:none;
+    }
+    #mountain-tag-wrapper{
+        flex-direction: row;
+    }
+}
+/* width 뷰포트 너비
+   height 뷰포트 높이
+   device-width 장치 너비
+   device-height 장치 높이
+   orientation 장치 방향
+   resolution 장치 해상도
+*/
