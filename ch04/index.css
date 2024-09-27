@@ -49,6 +49,7 @@ table {
 
 body {
   background-color: #111111;
+  
 }
 
 #main-img-wrapper {
@@ -122,4 +123,20 @@ body {
 
 .list-item#on::before{
   background-image: url('./icons/light_house.png');
+}
+main{
+  margin-bottom:500px;
+}
+#pannel-img{
+  position: relative;
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+}
+#flying-santa-image{
+  position: absolute ;
+  height: 330px;
+  right: -80px;
+  transform: translate(80px, -13px) rotate(23deg);
+
 }
