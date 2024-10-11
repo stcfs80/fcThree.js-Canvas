@@ -140,3 +140,80 @@ main{
   transform: translate(80px, -13px) rotate(23deg);
 
 }
+#video{
+  display:block;
+  margin:0 auto;
+  height: 350px;
+}
+
+#video-section{
+margin-bottom: 500px;
+}
+
+#flxed-description{
+  width: 622px;
+  margin:30px auto;
+  color:white;
+  text-align: right;
+  line-height:50px;
+  font-size:35px;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(100px);
+}
+#bank-beyond-wrapper{
+  height:380px;
+}
+#bank-beyond{
+  display:flex;
+  justify-content: center;
+}
+#white-wrapper{
+  padding-top: 80px; 
+  position: relative;
+  background-color: #f7f7f7;
+  height: 1000px;
+  z-index: 100;
+}
+
+#slider-container{
+  margin:0 auto;
+  position: relative;
+  width: 300px;
+
+}
+
+#slider-content-wrapper{
+  overflow-x:scroll;
+  scrollbar-width: none; /* Firefox */
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}
+#slider-content{
+  display:flex;
+}
+.slider-image{
+  width: 300px;
+  height: 466px;
+  scroll-snap-align: center;
+}
+
+.slider-button{
+  position: absolute;
+  bottom:-110px;
+  font-size:40px;
+  cursor: pointer;
+}
+
+#left-button{
+  left: 10px;
+}
+#right-button{
+  right: 10px;
+}
+#slider-index{
+  position: absolute;
+  bottom: -100px;
+  left:50%;
+  transform:translteX(-50%);
+}

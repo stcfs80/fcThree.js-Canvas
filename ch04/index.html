@@ -57,7 +57,39 @@
   <main>
     <section id ="pannel-img">
       <img id="flying-santa-image" src="./santa_flying.png" alt="santa">
-    </section>    
+    </section>   
+    <section id="video-section">
+      <div id="fixed-wrapper">
+        <video muted loop id="video" src="ForBiggerBlazes.mp4" type="video/mp4">
+
+        </video>
+        <div id="flxed-description">
+          <div>혁신이 만든</div>
+          <div>압도적인 성장</div>
+        </div>
+      </div>
+    </section> 
+    <div id="bank-beyond-wrapper">
+      <div id="bank-beyond">
+        <img width="315" src="05-text.png" alt="sample">
+      </div>
+    </div>
+    <div id="white-wrapper">
+      <div id="slider-container">
+        <div id="slider-content-wrapper">
+          <div id="slider-content">
+            <img src="https://picsum.photos/id/1/600/933" class="slider-image" alt="">
+            <img src="https://picsum.photos/id/59/600/933" class="slider-image" alt="">
+            <img src="https://picsum.photos/id/89/600/933" class="slider-image" alt="">
+          </div>
+        </div>
+        <div class="slider-button" id="left-button">&lt;</div>
+        <div class="slider-button" id="right-button">&gt;</div>
+        <div id="slider-index">
+          1/3
+        </div>
+      </div>
+    </div>
   </main>
 </body>
 
@@ -68,7 +100,39 @@
   const division = (listStyleChangeEndY - listStyleChangeStartY) / listItems.length
   const pannel1Img = document.getElementById('pannel-img')
   const flyingSantaImage = document.getElementById("flying-santa-image");
-  
+  const videoPlayBack = 500
+  const videoSection = document.getElementById("video-section")
+  const fixedWrapper = document.getElementById("fixed-wrapper")
+
+  const videoElement = document.getElementById('video')
+
+  const fixedDescription = document.getElementById('flxed-description')
+
+  videoElement.addEventListener("loadedmetadata",() =>{
+    document.getElementById("video-section").style.height = videoElement.duration * videoPlayBack + "px";
+  });
+
+  function centerElement(elementId, video){
+    const element = document.getElementById(elementId)
+    const parent = element.parentElement
+
+    if (window.scrollY > parent.offsetTop - ((document.documentElement.clientHeight - element.offsetHeight) / 2)){
+     element.style.position = "fixed"
+     element.style.top = "50%"
+     element.style.left = "50%";
+     element.style.transform = "translate(-50%, -50%)" 
+
+     if(video) video.currentTime = (window.scrollY - videoSection.offsetTop) / videoPlayBack
+    }else{
+      element.style.position = "relative"
+      element.style.top = "initial"
+      element.style.left = "initial"
+      element.style.transform = "initial"
+    }
+  }
+
+  const fixedDescriptionApperTiming = 3470
+  const fixedDescriptionAppearEnds = 3800
 
   window.addEventListener("scroll", () => {
     if (document.getElementById("on")) document.getElementById("on").removeAttribute("id")
@@ -91,10 +155,62 @@
       
     }
 
+    centerElement("fixed-wrapper",videoElement)
 
-    
+    if(window.scrollY > (videoSection.offsetTop + videoSection.offsetHeight) - (fixedWrapper.offsetHeight + (document.documentElement.clientHeight - fixedWrapper.offsetHeight) / 2)){
+      fixedWrapper.style.position = "relative"
+      fixedWrapper.style.top = "initial"
+      fixedWrapper.style.left = "initial"
+      fixedWrapper.style.transform = `translateY(${videoSection.offsetHeight - fixedWrapper.offsetHeight}px)`
+    }
+
+    if(window.scrollY > fixedDescriptionApperTiming && window.scrollY < fixedDescriptionAppearEnds){
+      fixedDescription.style.transform = `translateY(${fixedDescriptionAppearEnds - window.scrollY}px)`
+      fixedDescription.style.opacity = (window.scrollY - fixedDescriptionApperTiming) / 360
+    }else if (window.scrollY > fixedDescriptionAppearEnds){
+      fixedDescription.style.transform = `translateY(0px)`;
+      fixedDescription.style.opacity = 1
+    }else{
+      fixedDescription.style.transform = `translateY(100px)`;
+      fixedDescription.style.opacity = 0
+    }
+
+    centerElement("bank-beyond")
   }) 
 
+  let currentImage = 0;
+
+  const sliderImages = document.querySelectorAll('.slider-image');
+  const sliderIndex = document.getElementById('slider-index')
+
+  const handleSlideChange = (step) =>{
+    currentImage += step
+
+    if(currentImage < 0){
+      currentImage = sliderImages.length - 1
+    }else if(currentImage >= sliderImages.length){
+      currentImage = 0;
+    }
+    sliderContentWrapper.scrollLeft = sliderImages[currentImage].offsetLeft
+    sliderIndex.innerText = `${currentImage + 1}/${sliderImages.length}`
+  }
+
+  document.getElementById("left-button").addEventListener("click",() =>{
+    handleSlideChange(-1)
+  })
+
+  document.getElementById("right-button").addEventListener("click",() =>{
+    handleSlideChange(1)
+  })
+  
+  const sliderContentWrapper = document.getElementById("slider-content-wrapper");
+
+  sliderContentWrapper.addEventListener("scroll",() =>{
+    const imageWidth = document.querySelectorAll('.slider-image')[0].offsetWidth
+
+    currentImage = Math.round((sliderContentWrapper.scrollLeft / imageWidth));
+    sliderIndex.innerText = `${currentImage + 1}/${sliderImages.length}`
+  });
 </script>
 
 </html>
