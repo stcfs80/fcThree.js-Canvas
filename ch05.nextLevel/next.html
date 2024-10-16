@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./next.css">
+    <title>InterActive</title>
+</head>
+<body>
+    <div class="cursor">
+        <div class="cursor__default">
+            <span class="cursor__default__inner"></span>
+        </div>
+
+        <div class="cursor__trace">
+            <span class="cursor__trace__inner"></span>
+        </div>
+    </div>
+    <section class="preloader shown-area">
+        <button class="preloader__btn">
+            <span class="preloader__btn_hold">Enter</span>
+        </button>
+    </section>
+
+    <section class="header hidden-area">
+        <span class="circle" id="circle-1"></span>
+        <span class="circle" id="circle-2"></span>
+        <img src="./images/free-icon-crown-1553870.png" alt="" class="cube__image" id="cube__image_1">
+        <img src="./images/free-icon-crown-1553870.png" alt="" class="cube__image" id="cube__image_2">
+        <img src="./images/free-icon-crown-1553870.png" alt="" class="cube__image" id="cube__image_3">
+        <img src="./images/free-icon-crown-1553870.png" alt="" class="cube__image" id="cube__image_4">
+        <h1 class="header__title">
+            <div>LAST ART</div>
+            <div>PROJECTS</div>
+        </h1>
+    </section>
+
+
+</body>
+
+<script>
+    const header = document.querySelector(".header")
+
+    document.addEventListener("mousemove", (e) =>{
+        requestAnimationFrame(() => {
+        const cursorDefaultInner = document.querySelector(".cursor__default__inner")
+        const cursorTraceInner = document.querySelector(".cursor__trace__inner")
+
+
+        cursorDefaultInner.style.top = e.clientY + "px"
+        cursorDefaultInner.style.left = e.clientX + "px"
+        cursorTraceInner.style.top = e.clientY + "px"
+        cursorTraceInner.style.left = e.clientX + "px"
+        });
+  
+    });
+
+    const cursor = document.querySelector(".cursor");
+
+    document.addEventListener("mousedown", () =>{
+        cursor.classList.add("cursor--active")
+    })
+
+    document.addEventListener("mouseup", () =>{
+        cursor.classList.remove("cursor--active")
+    })
+
+    function createRipple(e){
+        let ripple = document.createElement("span")
+
+        ripple.classList.add("ripple")
+        ripple.style.top = e.clientY  + "px"
+        ripple.style.left = e.clientX  + "px"
+        cursor.appendChild(ripple)
+
+        ripple.addEventListener("animationend",()=>{
+            cursor.removeChild(ripple)
+        });
+    }
+
+    document.addEventListener("mousedown",(e) =>{
+        createRipple(e)
+    });
+
+    const preloaderBtn = document.querySelector(".preloader__btn")
+    let intervalId = null
+    let scale = 1
+
+    const preloaderHideThreshold = 18 
+
+    function setPreloaderStyle(scale){
+        preloaderBtn.style.transform = `scale(${scale})`
+        document.querySelector(".preloader__btn_hold").style.opacity = 1 - (scale - 1) / preloaderHideThreshold
+    }
+
+    preloaderBtn.addEventListener("mousedown",() =>{
+        intervalId = setInterval(() => {
+            scale += 0.175;
+            
+            setPreloaderStyle(scale)
+
+            if (scale >= 1 +preloaderHideThreshold){
+                
+                document.querySelector(".preloader").classList.add("hidden-area")
+                document.querySelector(".preloader").classList.remove("shown-area")
+
+                header.classList.remove("hidden-area")
+                header.classList.remove("shown-area")
+
+                clearInterval(intervalId)
+            }
+        }, 10)
+    });
+    
+    preloaderBtn.addEventListener("mouseup", () =>{
+        clearInterval(intervalId)
+
+        intervalId = setInterval(() =>{
+            scale -= 0.075
+            setPreloaderStyle(scale)
+
+            if(scale <= 1){
+                clearInterval(intervalId)
+            }
+        })
+    });
+
+    header.addEventListener("mousemove",(e) =>{
+        const xRelativeToHeader = e.clientX / header.clientWidth
+        const yRelativeToHeader = e.clientY / header.clientHeight
+
+        document.querySelector(".header__title").style.transform = `translate(${(xRelativeToHeader * - 50)}px,${yRelativeToHeader * - 50}px)`
+
+        document.querySelector("#circle-1").style.transform = `translate(${xRelativeToHeader * -25}px, ${yRelativeToHeader * -25}px)`
+        document.querySelector("#circle-2").style.transform = `translate(${xRelativeToHeader * 15}px, ${yRelativeToHeader * 25}px)`
+
+        document.querySelector("#cube__image_1").style.transform = `translate(${xRelativeToHeader * -15}px, ${yRelativeToHeader * -15}px)`
+        document.querySelector("#cube__image_2").style.transform = `translate(${xRelativeToHeader * 15}px, ${yRelativeToHeader * 15}px)`
+        document.querySelector("#cube__image_3").style.transform = `translate(${xRelativeToHeader * -35}px, ${yRelativeToHeader * -35}px)`
+        document.querySelector("#cube__image_4").style.transform = `translate(${xRelativeToHeader * -35}px, ${yRelativeToHeader * -35}px)`
+    });
+</script>
+</html>
