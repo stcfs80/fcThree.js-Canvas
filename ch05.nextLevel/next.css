@@ -161,6 +161,7 @@ body {
     line-height: 20px;
     font-weight: 800;
     letter-spacing: normal;
+
 }
 .header{
     position: relative;
@@ -223,4 +224,90 @@ body {
     color:#605e5b;
     text-align: center;
     color:#d5a54e;
+}
+
+.poster__parallax{
+    position: relative;
+    height: 1500px;
+    margin-top: 80px;
+}
+
+.poster-image{
+    position: absolute;
+}
+
+.poster-image_wrapper{
+    position: absolute;
+    opacity: 1;
+}
+
+#poster-image_wrapper_1{
+    right: 0;
+    height: 100%;
+}
+#poster-image_wrapper_2{
+    top: 10%;
+    left: 5%;
+    height: 667px;
+}
+#poster-image_wrapper_3{
+    top: 35%;
+    right: 0;
+    height: 772px;
+}
+
+#poster-image_1{
+    right: 0;
+    width: 1127px;
+}
+#poster-image_2{
+    height: 100%;
+}
+#poster-image_3{
+    right: 0;
+    height: 100%;
+}
+
+@keyframes appear-right-to-left{
+    from{
+        opacity: 0 ;
+        transform: translateX(100%);
+    }
+    to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+@keyframes appear-left-to-right{
+    from{
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+    to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+@keyframes appear-bottom-top-top{
+    from{
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.poster-image_state_visible #poster-image_1{
+    animation:appear-right-to-left .75s ease;
+    animation-fill-mode: forwards;
+}
+.poster-image_state_visible #poster-image_2{
+    animation:appear-left-to-right .75s ease;
+    animation-fill-mode: forwards;
+}
+.poster-image_state_visible #poster-image_3{
+    animation:appear-bottom-top-top .75s ease;
+    animation-fill-mode: forwards;
 }
