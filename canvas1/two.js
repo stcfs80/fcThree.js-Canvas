@@ -22,9 +22,12 @@ class Particle{
         this.y = y
         this.radius = radius
         this.vy = vy
+        this.acc = 1.03
+        //acceleration  가속도
     }
     update(){
-        this.y += this.vy
+        this.vy *= this.acc
+        this.y += this.vy 
     }
     draw(){
         ctx.beginPath()
